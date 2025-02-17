@@ -159,7 +159,8 @@ exports.addTweet = async (req, res) => {
 exports.alltweets=async (req, res) => {
   try {
     const reviews = await Review.find().populate("bookId", "title");
-    // console.log("reviews",reviews[0].tweets[0]);
+    // console.log("reviews",reviews[0].tweets);
+    console.log(reviews);
     const tweets = reviews.flatMap((review) =>
       review.tweets.map((tweet) => ({
         tweet: tweet.tweet,
@@ -169,10 +170,10 @@ exports.alltweets=async (req, res) => {
         bookName: review.bookId.title,
       }))
     );
-
+    console.log("tweets",tweets)
     const books = reviews.map((review) => ({
-      bookId: review.bookId._id,
-      bookName: review.bookId.title,
+      bookId: review.bookId._id || null,
+      bookName: review.bookId.title || null,
     }));
     console.log("all tweets",{tweets,books});
     res.json({ tweets, books });

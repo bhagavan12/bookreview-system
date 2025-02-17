@@ -4,8 +4,15 @@ const Book = require('../models/bookModel');
 exports.checkBook = async (req, res) => {
   try {
     const { title } = req.body;
-    const book = await Book.findOne({ title });
+    // const book = await Book.findOne({ title });
 
+    const book = await Book.find({
+      $or: [
+        { title: { $regex: title, $options: "i" } },
+        { description: { $regex: title, $options: "i" } },
+        { author: { $regex: title, $options: "i" } }
+      ]
+    });
     if (book) {
       console.log("bookchecked",book);
       return res.status(200).json({ message: 'Book exists', book });

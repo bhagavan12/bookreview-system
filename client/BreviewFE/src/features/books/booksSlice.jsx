@@ -55,7 +55,7 @@ const booksSlice = createSlice({
         state.loading = false;
         console.log("action.payload.book",action.payload.book);
         state.books=[];
-        state.books.push(action.payload.book);
+        state.books=action.payload.book;
         // localStorage.setItem('selectedBook', JSON.stringify(action.payload.book));
 
       })

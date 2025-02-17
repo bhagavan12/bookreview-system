@@ -89,7 +89,7 @@ const SearchAndUpload = () => {
   };
   const dispatch = useDispatch();
   const { books, loading, error } = useSelector((state) => state.books);
-  
+  console.log("searched books",books)
   const [searchQuery, setSearchQuery] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -124,6 +124,10 @@ const SearchAndUpload = () => {
             {loading ? <Loader className="spin" /> : <Search />}
             <span>Search</span>
           </button>
+          <button onClick={() => setIsFormVisible(true)} className="upload-button">
+              <Upload size={20} />
+              <span>Upload a new book</span>
+            </button>
         </div>
 
         {error && <div className="error-message">Error: {error}</div>}
@@ -133,7 +137,7 @@ const SearchAndUpload = () => {
         {books.length > 0 ? (
           <div className="books-container">
             <h3>Matched Books</h3>
-            <div className="books-grid">
+            <div className="books-slider">
               {books.map((book) => (
                 <BookCard key={book._id} book={book} />
               ))}
@@ -142,10 +146,6 @@ const SearchAndUpload = () => {
         ) : (
           <div className="no-results">
             <p>No books found matching your search.</p>
-            <button onClick={() => setIsFormVisible(true)} className="upload-button">
-              <Upload size={20} />
-              <span>Upload a new book</span>
-            </button>
           </div>
         )}
       </div>
